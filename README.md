@@ -23,7 +23,7 @@ The following will be implemented as additional features if time allows
 - Jake Russell: Water and cooking system
 
 ## Rough Schedule
-April 1, Reasearch done and parts ordered
-April 22, Individual parts made and tested
-April 29, Parts assembled together and whole project tested
-May 6, Issues fixed, final touches done
+- April 1, Reasearch done and parts ordered
+- April 22, Individual parts made and tested
+- April 29, Parts assembled together and whole project tested
+- May 6, Issues fixed, final touches done
