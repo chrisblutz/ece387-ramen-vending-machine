@@ -15,3 +15,15 @@ The following will be implemented as additional features if time allows
 - NFC Card reader to act as a payment method
 - Dispenser for toppings other than seasonings such as onions, sesame seeds, etc.
 - Actual water heating element
+
+## Member Tasks
+- Yang Guo: Project construction and polish
+- Cole Hnegstebeck: Hopper system for seasoning
+- Chris Lutz: Display and interface
+- Jake Russell: Water and cooking system
+
+## Rough Schedule
+April 1, Reasearch done and parts ordered
+April 22, Individual parts made and tested
+April 29, Parts assembled together and whole project tested
+May 6, Issues fixed, final touches done
