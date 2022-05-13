@@ -125,6 +125,14 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 const uint16_t SERVO_MINS[] = {110, 127, 120}; //affects down position
 const uint16_t SERVO_MAXS[] = {485, 485, 600}; //affectss up 
 
+/*
+ * --------------------
+ *   WATER PUMP SETUP
+ * --------------------
+ */
+
+#define PUMP_PIN 24
+
 /**
  * Perform initial setup on the touchscreen/LCD
  * and initialize the program values.
@@ -151,6 +159,10 @@ void setup() {
     pwm.begin();
     pwm.setOscillatorFrequency(27000000);
     pwm.setPWMFreq(SERVO_FREQ);
+
+    // Set up pump pin
+    pinMode(PUMP_PIN, OUTPUT);
+    digitalWrite(PUMP_PIN, HIGH);
 
     // Set the initial values for all program values
     resetMachine();
@@ -254,7 +266,8 @@ void loop() {
         // Cooking and stirring...
         case 5:
             drawHeader("PREPARING");
-            drawCenteredText("COOKING AND STIRRING...", 2, WIDTH / 2, HEIGHT / 2);
+            drawCenteredText("COOKING...", 2, WIDTH / 2, HEIGHT / 2);
+            drawCenteredText("(PLEASE WAIT)0", 2, WIDTH / 2, HEIGHT / 2 + (LETTER_HEIGHT * 3));
             break;
         // Order done
         case 6:
@@ -321,9 +334,14 @@ void loop() {
     } else if (state == 2) {
         // Pouring water...
         
-        // TODO
         delay(1000);
-        state = 3;
+
+        dispenseWater();
+
+        delay(1000);
+        
+        // Next state
+        state = 4;
         redraw = true;
     } else if (state == 3) {
         // Adding noodles...
@@ -335,25 +353,25 @@ void loop() {
     } else if (state == 4) {
         // Adding in seasonings...
       
-        delay(750);
+        delay(1000);
 
         // Turn all selected servos
-        if (beefSelected)
-          servo_turn_up(0);
-        if (chickenSelected)
-          servo_turn_up(1);
-        if (porkSelected)
-          servo_turn_up(2);
-        
-        delay(750);
-
-        // Turn back all selected servos
         if (beefSelected)
           servo_turn_down(0);
         if (chickenSelected)
           servo_turn_down(1);
         if (porkSelected)
           servo_turn_down(2);
+        
+        delay(750);
+
+        // Turn back all selected servos
+        if (beefSelected)
+          servo_turn_up(0);
+        if (chickenSelected)
+          servo_turn_up(1);
+        if (porkSelected)
+          servo_turn_up(2);
           
         delay(1000);
 
@@ -361,10 +379,10 @@ void loop() {
         state = 5;
         redraw = true;
     } else if (state == 5) {
-        // Cooking and stirring...
+        // Cooking...
 
         // TODO
-        delay(1000);
+        delay(10000);
         state = 6;
         redraw = true;
     } else if (state == 6) {
@@ -505,4 +523,10 @@ void servo_turn_down(int servo_num) {
     pwm.setPWM(servo_num, 0, pulselen);
     //delay(1);
   }
+}
+
+void dispenseWater() {
+  digitalWrite(PUMP_PIN, LOW);
+  delay(3000);
+  digitalWrite(PUMP_PIN, HIGH);
 }
